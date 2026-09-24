@@ -209,7 +209,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
 .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--violet); font-family: var(--mono); font-size: 13px; color: var(--violet); }
 .steps > li > p:first-child { font-weight: 600; margin-bottom: 10px; padding-top: 2px; }
 .cmd { display: flex; align-items: center; gap: 12px; background: var(--glass); border: 1px solid var(--edge); border-radius: 10px; padding: 12px 12px 12px 16px; }
-.cmd code { flex: 1; color: var(--ink); font-size: 14px; overflow-x: auto; white-space: nowrap; }
+.cmd code { flex: 1; color: var(--ink); font-size: 14px; overflow-wrap: anywhere; }
 .copy { font: 500 13px var(--mono); color: var(--ink); background: var(--glass-2); border: 1px solid var(--edge); border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: border-color .2s, color .2s; flex-shrink: 0; }
 .copy:hover { border-color: var(--teal); }
 .copy.done { color: var(--teal); border-color: var(--teal); }
@@ -345,6 +345,18 @@ details p { color: var(--haze); padding: 0 0 20px; max-width: 65ch; }
 .daily > *, .how-cowork > * { min-width: 0; }
 .mini, .cowork-term .t-sys { overflow-wrap: anywhere; }
 
+/* cowork pointers */
+.for-claude { white-space: nowrap; }
+.cowork-link { display: inline-flex; gap: 6px; margin-top: 18px; font-size: 15px; color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(98,230,216,.35); padding-bottom: 2px; }
+.cowork-link:hover { border-color: var(--teal); }
+.head-note { margin-top: 16px; font-size: 16px; color: var(--haze); }
+.head-note a { color: var(--teal); }
+.cowork-card { display: flex; align-items: center; gap: 14px; margin-top: 30px; padding: 16px 18px; border: 1px solid rgba(98,230,216,.3); background: rgba(98,230,216,.06); border-radius: 12px; text-decoration: none; font-size: 15px; color: #d6d4e6; transition: border-color .2s; }
+.cowork-card:hover { border-color: var(--teal); }
+.cowork-card b { color: var(--ink); }
+.pill-tag { flex-shrink: 0; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--void); background: var(--teal); border-radius: 999px; padding: 3px 9px; }
+.cowork-card .arrow { margin-left: auto; color: var(--teal); }
+
 /* responsive rules for sections defined after the main media queries */
 @media (max-width: 960px) {
   .cowork { grid-template-columns: 1fr; }
@@ -352,6 +364,28 @@ details p { color: var(--haze); padding: 0 0 20px; max-width: 65ch; }
 }
 @media (max-width: 640px) {
   .daily, .how-cowork { grid-template-columns: 1fr; }
-  .compare-table { font-size: 14px; }
-  .compare-table th[scope=row] { width: auto; }
+
+  /* hero eyebrow wraps as two clean lines */
+  .hero-eyebrow { flex-wrap: wrap; row-gap: 6px; }
+  .nowrap { white-space: nowrap; }
+
+  /* long commands wrap instead of being cut off */
+  .cmd { align-items: flex-start; }
+
+  /* the vault tree fits the screen, comments included */
+  .tree { font-size: 12px; padding: 18px 16px; }
+
+  /* session cycle: the rail sits left of the text */
+  .cycle li { padding-left: 30px; }
+  .cycle::before { left: 10px; }
+  .c-event { margin-left: -30px; }
+
+  /* Code × Cowork table becomes stacked cards */
+  .compare-table thead { display: none; }
+  .compare-table, .compare-table tbody, .compare-table tr, .compare-table th, .compare-table td { display: block; width: auto; }
+  .compare-table tr { padding: 14px 0; border-bottom: 1px solid var(--edge); }
+  .compare-table th, .compare-table td { border: 0; padding: 3px 0; }
+  .compare-table th[scope=row] { width: auto; color: var(--ink); margin-bottom: 4px; }
+  .compare-table td[data-label]::before { content: attr(data-label) " · "; font-family: var(--mono); font-size: 12px; color: var(--violet); }
+  .compare-table td.both { text-align: left; }
 }

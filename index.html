@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Obsidian Memory · persistent memory for Claude Code</title>
+  <title>Obsidian Memory · persistent memory for Claude Code and Cowork</title>
   <meta name="description" content="An open-source plugin for Claude Code and Cowork. Every project gets a Markdown memory vault, so Claude picks up where you left off without rereading your code, using fewer tokens.">
-  <meta property="og:title" content="Obsidian Memory · persistent memory for Claude Code">
+  <meta property="og:title" content="Obsidian Memory · persistent memory for Claude Code and Cowork">
   <meta property="og:description" content="Claude picks up where you left off, without rereading your code. Open source, local, no telemetry.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#07070d">
@@ -56,14 +56,15 @@
     <!-- Hero -->
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="dot"></span>Open-source plugin for
-          <span class="for-claude"><svg aria-hidden="true"><use href="#claude-mark"/></svg>Claude Code</span></p>
+        <p class="eyebrow hero-eyebrow"><span class="dot"></span><span class="nowrap">Open-source plugin for</span>
+          <span class="for-claude"><svg aria-hidden="true"><use href="#claude-mark"/></svg>Claude Code &amp; Cowork</span></p>
         <h1>Claude remembers <em>where you left off</em>.</h1>
-        <p class="lede">Every project gets a memory vault in plain Markdown. When a session starts, the context is already there: what the project is, what was decided and what comes next. No re-explaining, no rereading your code.</p>
+        <p class="lede">Every project gets a memory vault in plain Markdown. When a session starts, the context is already there: what the project is, what was decided and what comes next. No re-explaining, no rereading your code. Works in Claude Code and in Claude Cowork.</p>
         <div class="cta">
           <a class="btn primary" href="#install">Install in 2 commands</a>
           <a class="btn ghost" href="https://github.com/marcuswmc/obsidian-memory-plugin" target="_blank" rel="noopener">View the code</a>
         </div>
+        <a class="cowork-link" href="#cowork">Using Claude Cowork? There's a version for it <span aria-hidden="true">→</span></a>
         <ul class="facts" aria-label="Highlights">
           <li>Open source · MIT</li>
           <li>100% local</li>
@@ -140,6 +141,7 @@
       <div class="section-head">
         <p class="eyebrow">How it works</p>
         <h2 id="t-how">Hooks handle every session. You just work.</h2>
+        <p class="head-note">In Claude Code, hooks do this. In Cowork, a skill loads and saves the same memory: <a href="#cowork">see how</a>.</p>
       </div>
       <ol class="cycle">
         <li><span class="c-event">SessionStart</span><h3>Context ready</h3><p>The vault's <code>CLAUDE.md</code> loads with the project, and the hook adds the last session summary.</p></li>
@@ -239,6 +241,7 @@
         <h2 id="t-install">Two commands inside Claude Code.</h2>
       </div>
       <div class="install">
+        <div>
         <ol class="steps">
           <li>
             <p>Add the marketplace</p>
@@ -254,6 +257,8 @@
             <p class="hint">Claude asks whether you want to version the vault with git and use Obsidian. Both are optional.</p>
           </li>
         </ol>
+        <a class="cowork-card" href="#cowork"><span class="pill-tag">Cowork</span><span>Using Claude Cowork? Install <b>Obsidian Memory for Cowork</b> from the same marketplace.</span><span aria-hidden="true" class="arrow">→</span></a>
+        </div>
 
         <div class="reqs">
           <h3>Requirements</h3>
@@ -321,10 +326,10 @@
       <table class="compare-table">
         <thead><tr><th scope="col"></th><th scope="col">Claude Code</th><th scope="col">Claude Cowork</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Plugin</th><td><code>obsidian-memory</code></td><td><code>obsidian-memory-cowork</code></td></tr>
-          <tr><th scope="row">Loads the memory</th><td>Automatically, through a hook</td><td>Through the skill, when the folder has a vault</td></tr>
-          <tr><th scope="row">Archives the conversation</th><td>Yes, at compaction and at session end</td><td>Session notes written as you go</td></tr>
-          <tr><th scope="row">Git and Obsidian</th><td>Optional, set at <code>init</code></td><td>Doesn't run git or open Obsidian</td></tr>
+          <tr><th scope="row">Plugin</th><td data-label="Claude Code"><code>obsidian-memory</code></td><td data-label="Claude Cowork"><code>obsidian-memory-cowork</code></td></tr>
+          <tr><th scope="row">Loads the memory</th><td data-label="Claude Code">Automatically, through a hook</td><td data-label="Claude Cowork">Through the skill, when the folder has a vault</td></tr>
+          <tr><th scope="row">Archives the conversation</th><td data-label="Claude Code">Yes, at compaction and at session end</td><td data-label="Claude Cowork">Session notes written as you go</td></tr>
+          <tr><th scope="row">Git and Obsidian</th><td data-label="Claude Code">Optional, set at <code>init</code></td><td data-label="Claude Cowork">Doesn't run git or open Obsidian</td></tr>
           <tr><th scope="row">Same vault</th><td colspan="2" class="both">Yes: <code>obsidian-vault/</code>, same format, same notes</td></tr>
         </tbody>
       </table>
@@ -413,9 +418,10 @@
         <svg viewBox="0 0 32 32" class="brand-mark" aria-hidden="true"><path d="M16 2 27 9 25 24 16 30 7 24 5 9Z" fill="url(#sheen)"/></svg>
         <span>Obsidian Memory</span>
       </div>
-      <p class="built"><svg aria-hidden="true"><use href="#claude-mark"/></svg>Built for Claude Code, with the help of Claude.</p>
+      <p class="built"><svg aria-hidden="true"><use href="#claude-mark"/></svg>Built for Claude Code and Cowork, with the help of Claude.</p>
       <nav aria-label="Links">
         <a href="https://github.com/marcuswmc/obsidian-memory-plugin" target="_blank" rel="noopener">GitHub</a>
+        <a href="#cowork">Cowork</a>
         <a href="https://github.com/marcuswmc/obsidian-memory-plugin/blob/main/docs/apresentacao/obsidian-memory.pdf" target="_blank" rel="noopener">Presentation (PDF, Portuguese)</a>
         <a href="https://marcussilva-dev.vercel.app/" target="_blank" rel="noopener">Portfolio</a>
       </nav>
