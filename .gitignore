@@ -1,2 +1,8 @@
 .DS_Store
 .vercel
+
+# obsidian-memory: the vault is kept out of git (chosen at init)
+obsidian-vault/
+
+# local Claude context (imports the vault)
+CLAUDE.md
