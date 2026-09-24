@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Obsidian Memory · memória persistente para o Claude Code</title>
+  <meta name="description" content="Plugin open source para o Claude Code. Cada projeto ganha um vault de memória em Markdown: o Claude retoma de onde parou, sem reler o código e gastando menos tokens.">
+  <meta property="og:title" content="Obsidian Memory · memória persistente para o Claude Code">
+  <meta property="og:description" content="O Claude retoma de onde parou, sem reler o código. Open source, local e sem telemetria.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#07070d">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#9d8cff"/>
+        <stop offset=".5" stop-color="#62e6d8"/>
+        <stop offset="1" stop-color="#ff8ad8"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="nav">
+    <a class="brand" href="#" aria-label="Obsidian Memory, início">
+      <svg viewBox="0 0 32 32" class="brand-mark" aria-hidden="true"><path d="M16 2 27 9 25 24 16 30 7 24 5 9Z" fill="url(#sheen)"/><path d="M16 2 19 15 16 30 13 15Z" fill="#fff" opacity=".22"/></svg>
+      <span>Obsidian Memory</span>
+    </a>
+    <nav aria-label="Seções">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#economia">Economia</a>
+      <a href="#instalar">Instalar</a>
+      <a href="#open-source">Open source</a>
+    </nav>
+    <a class="gh" href="https://github.com/marcuswmc/obsidian-memory-plugin" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      GitHub
+    </a>
+  </header>
+
+  <main id="conteudo">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot"></span>Plugin open source para o Claude Code</p>
+        <h1>O Claude lembra <em>onde vocês pararam</em>.</h1>
+        <p class="lede">Cada projeto ganha um vault de memória em Markdown. Ao abrir uma sessão, o contexto já está lá: o que é o projeto, o que foi decidido e o próximo passo. Sem explicar de novo, sem reler o código.</p>
+        <div class="cta">
+          <a class="btn primary" href="#instalar">Instalar em 2 comandos</a>
+          <a class="btn ghost" href="https://github.com/marcuswmc/obsidian-memory-plugin" target="_blank" rel="noopener">Ver o código</a>
+        </div>
+        <ul class="facts" aria-label="Características">
+          <li>Open source · MIT</li>
+          <li>100% local</li>
+          <li>macOS · Linux · Windows</li>
+        </ul>
+      </div>
+
+      <div class="hero-stage" aria-label="Exemplo de sessão retomada com o plugin">
+        <svg class="shard" viewBox="0 0 400 480" aria-hidden="true">
+          <defs>
+            <clipPath id="shard-clip"><path d="M200 8 368 118 344 368 200 472 56 368 32 118Z"/></clipPath>
+            <linearGradient id="f1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2150"/><stop offset="1" stop-color="#0c0b18"/></linearGradient>
+            <linearGradient id="f2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b3a44"/><stop offset="1" stop-color="#0a0a14"/></linearGradient>
+            <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#c9f6ff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          </defs>
+          <g clip-path="url(#shard-clip)">
+            <path d="M200 8 32 118 120 250Z" fill="url(#f1)"/>
+            <path d="M200 8 368 118 280 250Z" fill="url(#f2)"/>
+            <path d="M200 8 120 250 200 300 280 250Z" fill="#171431"/>
+            <path d="M32 118 120 250 56 368Z" fill="#100f22"/>
+            <path d="M368 118 280 250 344 368Z" fill="#0f1c26"/>
+            <path d="M120 250 200 300 200 472 56 368Z" fill="#141029"/>
+            <path d="M280 250 200 300 200 472 344 368Z" fill="#0d1622"/>
+            <rect class="sweep" x="-200" y="-40" width="160" height="560" fill="url(#sweep)" transform="rotate(18)"/>
+          </g>
+          <path d="M200 8 368 118 344 368 200 472 56 368 32 118Z" fill="none" stroke="url(#sheen)" stroke-width="1.5" opacity=".7"/>
+          <path d="M200 8 120 250 200 300 280 250Z M32 118 120 250 M368 118 280 250 M200 300 200 472" fill="none" stroke="#9d8cff" stroke-opacity=".18"/>
+        </svg>
+
+        <div class="term" role="img" aria-label="Terminal: uma nova sessão carrega o contexto do vault e o Claude responde onde o trabalho parou, sem usar ferramentas.">
+          <div class="term-bar"><i></i><i></i><i></i><span>~/loja-online</span></div>
+          <div class="term-body" id="term">
+            <p class="t-line"><span class="t-prompt">$</span> claude</p>
+            <p class="t-line t-sys"><span class="t-hook">SessionStart</span> vault carregado · CLAUDE.md + sessão de 23-09 18h40</p>
+            <p class="t-line"><span class="t-you">›</span> onde paramos?</p>
+            <p class="t-line t-ans">Paramos no checkout. O Pix já funciona; falta validar o CPF em <code>src/checkout/form.tsx</code>. Ficou decidido manter o Stripe para cartão (<code>decisions/0004</code>).</p>
+            <p class="t-line t-meta"><span>0 ferramentas</span><span>0 arquivos lidos</span><span>~6 s</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problema -->
+    <section class="section contrast" aria-labelledby="t-problema">
+      <div class="section-head">
+        <p class="eyebrow">Por que existe</p>
+        <h2 id="t-problema">Toda sessão nova começa sem memória.</h2>
+      </div>
+      <div class="split">
+        <div class="col without">
+          <h3>Sem memória</h3>
+          <ul>
+            <li>Você explica o projeto, onde parou e o que já foi decidido.</li>
+            <li>O agente relê README, código e histórico para se situar.</li>
+            <li>Na compactação, detalhes e motivos somem no resumo.</li>
+            <li>Ideias já descartadas voltam a ser propostas.</li>
+          </ul>
+        </div>
+        <div class="col with">
+          <h3>Com Obsidian Memory</h3>
+          <ul>
+            <li>O contexto do projeto chega pronto no início da sessão.</li>
+            <li>"Onde paramos?" é respondido sem abrir nenhum arquivo.</li>
+            <li>A conversa inteira é arquivada antes de cada compactação.</li>
+            <li>Decisões ficam registradas com o porquê, e o que não fazer também.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Como funciona -->
+    <section class="section" id="como-funciona" aria-labelledby="t-como">
+      <div class="section-head">
+        <p class="eyebrow">Como funciona</p>
+        <h2 id="t-como">Hooks cuidam de cada sessão. Você só trabalha.</h2>
+      </div>
+      <ol class="cycle">
+        <li><span class="c-event">SessionStart</span><h3>Contexto pronto</h3><p>O <code>CLAUDE.md</code> do vault carrega com o projeto, e o hook injeta o resumo da última sessão.</p></li>
+        <li><span class="c-event">Durante a sessão</span><h3>Leitura sob demanda</h3><p>Specs, decisões e sessões antigas só entram no contexto quando a tarefa precisa.</p></li>
+        <li><span class="c-event">PreCompact</span><h3>Nada se perde</h3><p>Antes de compactar, a conversa é arquivada. Depois, o contexto do projeto volta.</p></li>
+        <li><span class="c-event">SessionEnd</span><h3>Arquivo e commit</h3><p>Salva a conversa em <code>daily/</code> e comita só o vault, se você usa git. Nunca faz push.</p></li>
+      </ol>
+
+      <div class="vault">
+        <div class="vault-copy">
+          <h3>O vault é só uma pasta de Markdown</h3>
+          <p><code>obsidian-vault/</code> fica ao lado do seu código. O Claude lê e escreve; você pode abrir no Obsidian para navegar pelas notas, ou nunca abrir.</p>
+          <dl>
+            <div><dt>CLAUDE.md</dt><dd>O que é o projeto, stack, estado atual, decisões, mapa de arquivos e o que não fazer.</dd></div>
+            <div><dt>daily/</dt><dd>Resumo de cada sessão e a conversa arquivada, por dia.</dd></div>
+            <div><dt>decisions/</dt><dd>Decisões numeradas, com o contexto e o porquê.</dd></div>
+          </dl>
+        </div>
+<pre class="tree" aria-label="Estrutura do vault"><b>obsidian-vault/</b>
+├── CLAUDE.md          <i># contexto do projeto</i>
+├── _index.md          <i># índice gerado</i>
+├── 00-inbox.md        <i># capturas rápidas</i>
+├── daily/23-09-2026/
+│   ├── session-18h40.md
+│   └── transcript-*.md <i># fora do git</i>
+├── specs/  plans/  processes/
+├── decisions/         <i># 0001-*.md …</i>
+└── bugs/  retro/</pre>
+      </div>
+    </section>
+
+    <!-- Vantagens -->
+    <section class="section" aria-labelledby="t-vant">
+      <div class="section-head">
+        <p class="eyebrow">O que você ganha</p>
+        <h2 id="t-vant">Continuidade de projeto, não de conversa.</h2>
+      </div>
+      <div class="features">
+        <article><h3>Retomada instantânea</h3><p>A pergunta "onde paramos?" é respondida com o que já está no contexto, em uma única chamada ao modelo.</p></article>
+        <article><h3>Menos tokens</h3><p>Só o <code>CLAUDE.md</code> e a última sessão entram no início, alguns KB. O resto fica no disco até ser útil.</p></article>
+        <article><h3>Arquivo automático</h3><p>Toda sessão é salva com comandos e respostas, na compactação e no fim.</p></article>
+        <article><h3>Decisões que ficam</h3><p>Registros numerados e uma lista do que não fazer evitam rediscutir o que já foi resolvido.</p></article>
+        <article><h3>Git opcional e seguro</h3><p>Commits locais só do vault. Antes de cada commit, o plugin procura chaves e tokens e bloqueia se achar.</p></article>
+        <article><h3>Obsidian opcional</h3><p>Registra e abre o vault no Obsidian, com notas diárias e templates prontos. Ou use só o Markdown.</p></article>
+      </div>
+    </section>
+
+    <!-- Economia -->
+    <section class="section economy" id="economia" aria-labelledby="t-eco">
+      <div class="section-head">
+        <p class="eyebrow">Benchmark</p>
+        <h2 id="t-eco">Menos tokens para se situar. Mais para trabalhar.</h2>
+      </div>
+
+      <div class="measured">
+        <p class="tag">Medido em projetos reais</p>
+        <div class="stats">
+          <div><strong>0</strong><span>ferramentas para responder "onde paramos?"</span></div>
+          <div><strong>0</strong><span>tokens de leitura adicionados ao contexto</span></div>
+          <div><strong>~6s</strong><span>até a resposta, em uma chamada ao modelo</span></div>
+        </div>
+        <p class="source">Fonte: logs de uso do Claude Code (campo <code>usage</code>) em sessões novas abertas com "onde paramos?". O contexto antes e depois da resposta é o mesmo.</p>
+      </div>
+
+      <div class="estimate">
+        <div class="compare">
+          <p class="tag">Estimativa · retomar um projeto</p>
+          <div class="bars">
+            <div class="bar-row"><span>Sem memória</span><div class="track"><div class="fill off" style="--w:100%"></div></div><b>~19.500 tokens</b></div>
+            <div class="bar-row"><span>Com o plugin</span><div class="track"><div class="fill on" style="--w:18%"></div></div><b class="on-text">~3.500 tokens</b></div>
+          </div>
+          <ul class="deltas">
+            <li><strong>−82%</strong> na janela de contexto para se orientar</li>
+            <li><strong>−90%</strong> de tokens de entrada processados na retomada</li>
+            <li><strong>~8</strong> leituras de arquivo evitadas</li>
+          </ul>
+        </div>
+
+        <div class="calc" aria-labelledby="t-calc">
+          <h3 id="t-calc">Quanto você economiza por mês</h3>
+          <label for="retomadas">Sessões retomadas por mês: <output id="retomadas-out">20</output></label>
+          <input type="range" id="retomadas" min="1" max="120" value="20">
+          <dl class="calc-out">
+            <div><dt>Tokens de entrada evitados</dt><dd id="out-tokens">~10,1 milhões</dd></div>
+            <div><dt>Leituras de arquivo evitadas</dt><dd id="out-tools">~160</dd></div>
+            <div><dt>Espera evitada</dt><dd id="out-time">~30 min</dd></div>
+          </dl>
+          <p class="source">Por retomada: ~506 mil tokens de entrada, ~8 leituras e ~1,5 min, medidos num projeto de 74 KB de código e docs. Projetos maiores economizam mais. Boa parte da entrada vem do cache de prompt, que custa menos, mas conta para os limites do seu plano.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Instalar -->
+    <section class="section" id="instalar" aria-labelledby="t-inst">
+      <div class="section-head">
+        <p class="eyebrow">Instalar</p>
+        <h2 id="t-inst">Dois comandos dentro do Claude Code.</h2>
+      </div>
+      <div class="install">
+        <ol class="steps">
+          <li>
+            <p>Adicione o marketplace</p>
+            <div class="cmd"><code>/plugin marketplace add marcuswmc/obsidian-memory-plugin</code><button type="button" class="copy" data-copy="/plugin marketplace add marcuswmc/obsidian-memory-plugin">Copiar</button></div>
+          </li>
+          <li>
+            <p>Instale o plugin</p>
+            <div class="cmd"><code>/plugin install obsidian-memory@obsidian-memory</code><button type="button" class="copy" data-copy="/plugin install obsidian-memory@obsidian-memory">Copiar</button></div>
+          </li>
+          <li>
+            <p>No seu projeto, crie o vault</p>
+            <div class="cmd"><code>/obsidian-memory:vault init</code><button type="button" class="copy" data-copy="/obsidian-memory:vault init">Copiar</button></div>
+            <p class="hint">O Claude pergunta se você quer versionar o vault com git e usar o Obsidian. As duas coisas são opcionais.</p>
+          </li>
+        </ol>
+
+        <div class="reqs">
+          <h3>Requisitos</h3>
+          <table>
+            <thead><tr><th scope="col"></th><th scope="col">macOS · Linux</th><th scope="col">Windows</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Claude Code</th><td class="need">Obrigatório</td><td class="need">Obrigatório</td></tr>
+              <tr><th scope="row">Python 3.8+</th><td class="need">Obrigatório</td><td class="need">Obrigatório</td></tr>
+              <tr><th scope="row">git</th><td>Opcional</td><td class="need">Git for Windows</td></tr>
+              <tr><th scope="row">Obsidian</th><td>Opcional</td><td>Opcional</td></tr>
+            </tbody>
+          </table>
+          <p class="hint">No Windows, o Git Bash (vem com o Git for Windows) roda os hooks. Para conferir tudo, rode <code>/obsidian-memory:vault doctor</code>: ele instala o que faltar, sempre com a sua aprovação.</p>
+        </div>
+      </div>
+
+      <div class="commands">
+        <h3>No dia a dia</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row"><code>vault save</code></th><td>Salva o resumo da sessão e atualiza o estado atual do projeto</td></tr>
+            <tr><th scope="row"><code>vault status</code></th><td>Mostra o estado do vault, do git, do Obsidian e alertas</td></tr>
+            <tr><th scope="row"><code>vault open</code></th><td>Abre o vault no Obsidian</td></tr>
+            <tr><th scope="row"><code>vault doctor</code></th><td>Confere os requisitos e instala o que faltar</td></tr>
+          </tbody>
+        </table>
+        <p class="hint">Ou fale normalmente: "salve a sessão", "registre esta decisão", "onde paramos?".</p>
+      </div>
+    </section>
+
+    <!-- Open source -->
+    <section class="section os" id="open-source" aria-labelledby="t-os">
+      <div class="os-inner">
+        <div>
+          <p class="eyebrow">Open source</p>
+          <h2 id="t-os">Código aberto. Memória sua.</h2>
+          <p class="lede">Licença MIT, livre para usar, adaptar e redistribuir. Leia todo o código antes de instalar.</p>
+          <div class="cta">
+            <a class="btn primary" href="https://github.com/marcuswmc/obsidian-memory-plugin" target="_blank" rel="noopener">Ver no GitHub</a>
+            <a class="btn ghost" href="https://github.com/marcuswmc/obsidian-memory-plugin/issues" target="_blank" rel="noopener">Abrir uma issue</a>
+          </div>
+        </div>
+        <ul class="os-list">
+          <li><h3>100% local</h3><p>Sem servidor, sem conta e sem telemetria. O vault é Markdown no seu disco.</p></li>
+          <li><h3>Seu código intocado</h3><p>Commits incluem só o vault. O que está no stage fica como está, e nada é enviado com push.</p></li>
+          <li><h3>Sem dependências</h3><p>Python com a biblioteca padrão, um lançador bash e os hooks. Fácil de auditar.</p></li>
+          <li><h3>Nada sem você pedir</h3><p>Nenhum vault é criado sem <code>init</code>. Instalar ou reiniciar algo sempre pede aprovação.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq" aria-labelledby="t-faq">
+      <div class="section-head">
+        <p class="eyebrow">Perguntas</p>
+        <h2 id="t-faq">Antes de instalar</h2>
+      </div>
+      <div class="qa">
+        <details><summary>Preciso usar o Obsidian?</summary><p>Não. O vault é uma pasta de Markdown que o Claude lê e escreve. O Obsidian só serve para você navegar pelas notas, se quiser.</p></details>
+        <details><summary>Minhas conversas vão para o git?</summary><p>Não. As conversas arquivadas ficam fora do git. Se você ativar o git, só as notas do vault são comitadas, localmente e sem push.</p></details>
+        <details><summary>Funciona em projetos que já existem?</summary><p>Sim. Rode <code>init</code> na pasta do projeto: o Claude explora o código e preenche o <code>CLAUDE.md</code> com o contexto.</p></details>
+        <details><summary>E se eu não rodar o init?</summary><p>Nada acontece. Os hooks só agem em projetos que têm vault, e o plugin nunca cria um sozinho.</p></details>
+        <details><summary>Em que idioma ficam as notas?</summary><p>No idioma da conversa. As datas usam o formato dd-mm-aaaa.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" class="brand-mark" aria-hidden="true"><path d="M16 2 27 9 25 24 16 30 7 24 5 9Z" fill="url(#sheen)"/></svg>
+      <span>Obsidian Memory</span>
+    </div>
+    <p>Open source sob a licença MIT · feito para o Claude Code</p>
+    <nav aria-label="Links">
+      <a href="https://github.com/marcuswmc/obsidian-memory-plugin" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/marcuswmc/obsidian-memory-plugin/blob/main/docs/apresentacao/obsidian-memory.pdf" target="_blank" rel="noopener">Apresentação (PDF)</a>
+    </nav>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
