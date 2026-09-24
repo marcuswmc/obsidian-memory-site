@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Obsidian Memory · persistent memory for Claude Code</title>
-  <meta name="description" content="An open-source Claude Code plugin. Every project gets a Markdown memory vault, so Claude picks up where you left off without rereading your code, using fewer tokens.">
+  <meta name="description" content="An open-source plugin for Claude Code and Cowork. Every project gets a Markdown memory vault, so Claude picks up where you left off without rereading your code, using fewer tokens.">
   <meta property="og:title" content="Obsidian Memory · persistent memory for Claude Code">
   <meta property="og:description" content="Claude picks up where you left off, without rereading your code. Open source, local, no telemetry.">
   <meta property="og:type" content="website">
@@ -43,6 +43,7 @@
       <a href="#how-it-works">How it works</a>
       <a href="#savings">Savings</a>
       <a href="#install">Install</a>
+      <a href="#cowork">Cowork</a>
       <a href="#open-source">Open source</a>
     </nav>
     <a class="gh" href="https://github.com/marcuswmc/obsidian-memory-plugin" target="_blank" rel="noopener">
@@ -66,6 +67,7 @@
         <ul class="facts" aria-label="Highlights">
           <li>Open source · MIT</li>
           <li>100% local</li>
+          <li>Claude Code · Cowork</li>
           <li>macOS · Linux · Windows</li>
         </ul>
       </div>
@@ -269,6 +271,66 @@
       </div>
     </section>
 
+    <!-- Cowork -->
+    <section class="section" id="cowork" aria-labelledby="t-cowork">
+      <div class="section-head">
+        <p class="eyebrow">Also in Claude Cowork</p>
+        <h2 id="t-cowork">Same memory, now in Cowork.</h2>
+        <p class="lede">Cowork gets its own companion plugin, <b>Obsidian Memory for Cowork</b>. It reads and writes the same <code>obsidian-vault/</code>, so a project can move between Claude Code and Cowork without losing its place.</p>
+      </div>
+
+      <div class="cowork">
+        <div>
+          <h3 class="sub">Add it to Cowork</h3>
+          <ol class="steps">
+            <li>
+              <p>Add the marketplace in Cowork's plugin settings</p>
+              <div class="cmd"><code>marcuswmc/obsidian-memory-plugin</code><button type="button" class="copy" data-copy="marcuswmc/obsidian-memory-plugin">Copy</button></div>
+            </li>
+            <li>
+              <p>Install <b>Obsidian Memory for Cowork</b></p>
+              <p class="hint">Not the Claude Code one: that plugin relies on hooks, which Cowork doesn't run.</p>
+            </li>
+            <li>
+              <p>Start a session on a project folder</p>
+              <p class="hint">If the folder already has <code>obsidian-vault/</code>, Claude resumes from it. If it doesn't, ask Claude to "create the project memory".</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="term cowork-term" role="img" aria-label="A Cowork session: the skill loads, reads the vault, answers where the work stopped and later saves the session in the user's time zone.">
+          <div class="term-bar"><i></i><i></i><i></i><span>Cowork · online-store</span></div>
+          <div class="term-body">
+            <p class="t-line t-sys"><span class="t-hook">skill</span> obsidian-memory-cowork:vault</p>
+            <p class="t-line t-sys">read obsidian-vault/CLAUDE.md · daily/23-09-2026/session-18h40.md</p>
+            <p class="t-line"><span class="t-you">›</span> where did we leave off?</p>
+            <p class="t-line t-ans">Checkout: card payments work, the discount code field still needs validation. Next up: the orders page.</p>
+            <p class="t-line"><span class="t-you">›</span> save the session</p>
+            <p class="t-line t-sys"><span class="ok-mark">✓</span> daily/24-09-2026/session-17h05.md · Europe/Lisbon</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="how-cowork">
+        <article><h3>Resumes on its own</h3><p>When the folder has a vault, Claude loads the skill and reads <code>CLAUDE.md</code> and the last session before answering.</p></article>
+        <article><h3>Saves as you go</h3><p>Cowork has no end-of-session hook, so Claude writes the session note while it works, and wraps up when you say "save the session".</p></article>
+        <article><h3>Your time zone</h3><p>Cowork may run on a remote machine in UTC. Notes use the time zone stored in the vault; Claude Code records it for you, or Claude asks once.</p></article>
+        <article><h3>Files only</h3><p>No hooks, no Python and no git. If git is on for the vault, the next save in Claude Code commits what Cowork wrote.</p></article>
+      </div>
+
+      <table class="compare-table">
+        <thead><tr><th scope="col"></th><th scope="col">Claude Code</th><th scope="col">Claude Cowork</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Plugin</th><td><code>obsidian-memory</code></td><td><code>obsidian-memory-cowork</code></td></tr>
+          <tr><th scope="row">Loads the memory</th><td>Automatically, through a hook</td><td>Through the skill, when the folder has a vault</td></tr>
+          <tr><th scope="row">Archives the conversation</th><td>Yes, at compaction and at session end</td><td>Session notes written as you go</td></tr>
+          <tr><th scope="row">Git and Obsidian</th><td>Optional, set at <code>init</code></td><td>Doesn't run git or open Obsidian</td></tr>
+          <tr><th scope="row">Same vault</th><td colspan="2" class="both">Yes: <code>obsidian-vault/</code>, same format, same notes</td></tr>
+        </tbody>
+      </table>
+      <p class="hint">If Claude doesn't pick up the memory on its own in Cowork, ask "where did we leave off?" or run <code>/obsidian-memory-cowork:vault</code>.</p>
+    </section>
+
     <!-- Everyday use -->
     <section class="section" id="everyday" aria-labelledby="t-everyday">
       <div class="section-head">
@@ -336,6 +398,7 @@
       <div class="qa">
         <details><summary>Do I need Obsidian?</summary><p>No. The vault is a folder of Markdown that Claude reads and writes. Obsidian is only for browsing the notes yourself, if you want to.</p></details>
         <details><summary>Do my conversations end up in git?</summary><p>No. Archived conversations stay out of git. If you turn git on, only the vault notes are committed, locally and never pushed.</p></details>
+        <details><summary>Does it work in Claude Cowork?</summary><p>Yes, with the companion plugin Obsidian Memory for Cowork, from the same marketplace. It uses the same vault, so you can switch between Claude Code and Cowork on the same project. See <a href="#cowork">how to add it</a>.</p></details>
         <details><summary>Does it work on existing projects?</summary><p>Yes. Run <code>init</code> in the project folder: Claude explores the code and fills in <code>CLAUDE.md</code> with the context.</p></details>
         <details><summary>What if I never run init?</summary><p>Nothing happens. The hooks only act on projects that have a vault, and the plugin never creates one on its own.</p></details>
         <details><summary>What language are the notes in?</summary><p>The language of your conversation. Dates use the dd-mm-yyyy format.</p></details>

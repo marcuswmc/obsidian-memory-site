@@ -117,8 +117,8 @@ h3 { font-size: 18px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 6
 .t-ans code { font-size: 13px; }
 .t-meta { display: flex; gap: 8px; flex-wrap: wrap; margin: 0; }
 .t-meta span { font-size: 12px; color: var(--teal); border: 1px solid rgba(98,230,216,.3); background: rgba(98,230,216,.07); padding: 3px 9px; border-radius: 999px; }
-.js .t-line { opacity: 0; transform: translateY(4px); transition: opacity .4s, transform .4s; }
-.js .t-line.on { opacity: 1; transform: none; }
+.js #term .t-line { opacity: 0; transform: translateY(4px); transition: opacity .4s, transform .4s; }
+.js #term .t-line.on { opacity: 1; transform: none; }
 .caret::after { content: "▍"; color: var(--teal); animation: blink 1s steps(2) infinite; margin-left: 2px; }
 @keyframes blink { 50% { opacity: 0; } }
 
@@ -291,21 +291,33 @@ details p { color: var(--haze); padding: 0 0 20px; max-width: 65ch; }
   .vault dl div { grid-template-columns: 1fr; gap: 2px; }
   .term { font-size: 13px; }
   .foot nav { margin-left: 0; }
-  .daily { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .sweep, .caret::after { animation: none; }
-  .js .reveal, .js .t-line, .js .fill { opacity: 1; transform: none; transition: none; }
+  .js .reveal, .js #term .t-line, .js .fill { opacity: 1; transform: none; transition: none; }
 }
 
 /* long commands and trees must not widen grid columns */
-.hero > *, .vault > *, .estimate > *, .install > *, .os-inner > *, .steps li, .cmd { min-width: 0; }
+.cowork > *, .hero > *, .vault > *, .estimate > *, .install > *, .os-inner > *, .steps li, .cmd { min-width: 0; }
 
 /* claude mark in hero eyebrow */
 .for-claude { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); }
 .for-claude svg { width: 16px; height: 16px; }
+
+/* cowork */
+.section-head .lede { margin-top: 18px; }
+.sub { margin-bottom: 20px; }
+.cowork { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.cowork-term { width: 100%; margin: 0; }
+.cowork-term .term-body { min-height: 0; }
+.ok-mark { color: var(--teal); margin-right: 6px; }
+.how-cowork { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--edge); border: 1px solid var(--edge); border-radius: var(--radius); overflow: hidden; margin: 48px 0 40px; }
+.how-cowork article { background: var(--void); padding: 26px 24px; }
+.how-cowork p { font-size: 15px; color: var(--haze); }
+.compare-table th[scope=row] { width: 220px; }
+.compare-table td.both { color: var(--teal); text-align: center; }
 
 /* everyday use */
 .daily { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -330,3 +342,16 @@ details p { color: var(--haze); padding: 0 0 20px; max-width: 65ch; }
 .star-btn { gap: 8px; }
 .star-btn svg { width: 18px; height: 18px; }
 .star-count { margin-left: 4px; padding: 1px 8px; border-radius: 999px; background: rgba(7,7,13,.25); font-family: var(--mono); font-size: 13px; }
+.daily > *, .how-cowork > * { min-width: 0; }
+.mini, .cowork-term .t-sys { overflow-wrap: anywhere; }
+
+/* responsive rules for sections defined after the main media queries */
+@media (max-width: 960px) {
+  .cowork { grid-template-columns: 1fr; }
+  .how-cowork { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .daily, .how-cowork { grid-template-columns: 1fr; }
+  .compare-table { font-size: 14px; }
+  .compare-table th[scope=row] { width: auto; }
+}

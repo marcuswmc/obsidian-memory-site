@@ -24,7 +24,7 @@
   }
 
   // Reveal on scroll
-  const targets = document.querySelectorAll(".section-head, .split, .cycle, .vault, .features, .measured, .estimate, .install, .daily, .os-inner, .qa");
+  const targets = document.querySelectorAll(".section-head, .split, .cycle, .vault, .features, .measured, .estimate, .install, .cowork, .how-cowork, .daily, .os-inner, .qa");
   targets.forEach((el) => el.classList.add("reveal"));
   if ("IntersectionObserver" in window && !reduced) {
     const io = new IntersectionObserver((entries) => {
