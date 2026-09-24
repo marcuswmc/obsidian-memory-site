@@ -24,7 +24,7 @@
   }
 
   // Reveal on scroll
-  const targets = document.querySelectorAll(".section-head, .split, .cycle, .vault, .features, .measured, .estimate, .install, .commands, .os-inner, .qa");
+  const targets = document.querySelectorAll(".section-head, .split, .cycle, .vault, .features, .measured, .estimate, .install, .daily, .os-inner, .qa");
   targets.forEach((el) => el.classList.add("reveal"));
   if ("IntersectionObserver" in window && !reduced) {
     const io = new IntersectionObserver((entries) => {
@@ -36,12 +36,12 @@
   }
 
   // Savings calculator (per resumed session: ~506k input tokens, ~8 file reads, ~1.5 min)
-  const range = document.getElementById("retomadas");
-  const out = document.getElementById("retomadas-out");
-  const fmt = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
+  const range = document.getElementById("resumes");
+  const out = document.getElementById("resumes-out");
+  const fmt = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
   const tokens = (n) => {
     const t = n * 506000;
-    return t >= 1e6 ? "~" + fmt.format(t / 1e6) + " milhões" : "~" + fmt.format(Math.round(t / 1000)) + " mil";
+    return t >= 1e6 ? "~" + fmt.format(t / 1e6) + " million" : "~" + fmt.format(Math.round(t / 1000)) + "k";
   };
   const time = (n) => {
     const m = Math.round(n * 1.5);
@@ -57,17 +57,28 @@
   range.addEventListener("input", update);
   update();
 
+  // GitHub star count (optional; the button works without it)
+  fetch("https://api.github.com/repos/marcuswmc/obsidian-memory-plugin")
+    .then((r) => (r.ok ? r.json() : null))
+    .then((repo) => {
+      if (!repo || !(repo.stargazers_count > 0)) return;
+      const el = document.getElementById("star-count");
+      el.textContent = fmt.format(repo.stargazers_count);
+      el.hidden = false;
+    })
+    .catch(() => {});
+
   // Copy buttons
   document.querySelectorAll(".copy").forEach((btn) => {
     btn.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(btn.dataset.copy);
-        btn.textContent = "Copiado";
+        btn.textContent = "Copied";
         btn.classList.add("done");
       } catch {
-        btn.textContent = "Selecione e copie";
+        btn.textContent = "Select and copy";
       }
-      setTimeout(() => { btn.textContent = "Copiar"; btn.classList.remove("done"); }, 1800);
+      setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("done"); }, 1800);
     });
   });
 })();
