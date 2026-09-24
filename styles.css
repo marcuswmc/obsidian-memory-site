@@ -176,9 +176,9 @@ h3 { font-size: 18px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 6
 .bar-row b.on-text { color: var(--teal); }
 .track { height: 12px; background: var(--glass-2); border-radius: 99px; overflow: hidden; }
 .fill { height: 100%; width: var(--w); border-radius: 99px; transform-origin: left; }
-.fill.off { background: linear-gradient(90deg, #3a3450, #5b5173); }
+.fill.off { background: linear-gradient(90deg, #6b4a7a, #c26a9a 70%, #ff8ad8); }
 .muted-bar .track { height: 12px; }
-.muted-bar b { color: var(--haze); }
+.muted-bar b { color: var(--pink); }
 .hero-bar .track { height: 24px; overflow: visible; }
 .hero-bar .fill.on { box-shadow: 0 0 22px rgba(98,230,216,.55), 0 0 44px -6px rgba(157,140,255,.5); }
 .hero-bar span { color: var(--ink); font-weight: 600; }
